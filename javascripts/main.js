@@ -228,6 +228,7 @@ function Register() {
 
 }
 
+// Event Listeners
 milkButton.addEventListener("click", function(){
   register.addProduct(new Milk());
 });
@@ -246,6 +247,7 @@ resetButton.addEventListener('click', function () {
 
 var register = new Register();
 
+// Resets
 var currentCurrency = register.getCurrencySign();
 currecnySign.textContent = currentCurrency + ' ';
 payButton.textContent = ' ' + currentCurrency + ' ';
