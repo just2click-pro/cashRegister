@@ -1,14 +1,14 @@
 @font-face {
     font-family: 'corbel';
-    src: url(/resources/fonts/corbel/Corbel.ttf) format("truetype");
+    src: url(../resources/fonts/corbel/Corbel.ttf) format("truetype");
 }
 
 @font-face {
     font-family: 'monaco';
-    src: url(/resources/fonts/Monaco.ttf) format("truetype");
+    src: url(../resources/fonts/Monaco.ttf) format("truetype");
 }
 
 @font-face {
     font-family: 'go-2-old-western';
-    src: url(/resources/fonts/go_2_old_western/Go2OldWestern.ttf) format("truetype");
+    src: url(../resources/fonts/go_2_old_western/Go2OldWestern.ttf) format("truetype");
 }
