@@ -15,6 +15,7 @@ var countProducts = document.querySelector('.count-products');
 var userLanguage = window.navigator.userLanguage || window.navigator.language;
 var supportedCurrencies = [ 'USD', 'EUR', 'NIS'];
 
+// Classes
 function Gum() {
   this.id = 1;
   this.name = 'Bubble gum';
@@ -36,14 +37,16 @@ function Bread() {
 }
 
 function Register() {
+  // Register variables
   var that =this;
   this.products = [];
 
+  // Register functionality
   this.addProduct = function(product){
     this.products.push(product);
 
     registerTotal.textContent =
-    register.getTotal().toLocaleString(userLanguage, { minimumFractionDigits: 2 });
+    register.getTotal(that.renderPurchasedTable).toLocaleString(userLanguage, { minimumFractionDigits: 2 });
     countProducts.textContent = '(' + this.products.length + ')';
   };
 
@@ -70,6 +73,51 @@ function Register() {
     }
   };
 
+  this.reset = function (callback) {
+    that.products = [];
+    countProducts.textContent = '(0)';
+    registerTotal.innerHTML = this.getTotal();
+    cashInput.value = 0;
+
+    if (callback) {
+      callback();
+    }
+  };
+
+  this.getTotal = function(callback){
+    var result = 0;
+
+    for(var product of this.products) {
+      if(product.discount)
+        result += product.price * (1-product.discount);
+      else
+        result += product.price;
+    }
+
+    if (callback) {
+      callback();
+    }
+
+    return result;
+  };
+
+  this.pay = function(amount, callback){
+    var change = amount - this.getTotal();
+
+    if(amount >= this.getTotal()){
+      if (change > 0) {
+        console.log("Here's your change " + change);
+      }
+    } else {
+      console.error("Not enough money!");
+    }
+
+    if (callback) {
+      callback(change);
+    }
+  };
+
+  // HTML operations
   this.clearPurchasedTable = function () {
     while (purchasedTable.firstChild) {
       purchasedTable.removeChild(purchasedTable.firstChild);
@@ -77,9 +125,9 @@ function Register() {
   };
 
   this.renderPurchasedTable = function () {
-    this.clearPurchasedTable();
+    that.clearPurchasedTable();
 
-    for(var product of this.products) {
+    for(var product of that.products) {
       var price = product.price;
       var discounted = 0;
       var purchasedTR = document.createElement('tr');
@@ -118,10 +166,41 @@ function Register() {
       purchasedButton.setAttribute('data-product', JSON.stringify(product));
       purchasedButton.setAttribute('class', 'btn btn-danger pull-left left-button');
       purchasedButton.textContent = '-';
-
     }
   };
 
+  this.clearRegister = function () {
+    okMessage.setAttribute('class', 'hide');
+    warning.setAttribute('class', 'hide');
+    that.clearPurchasedTable();
+  };
+
+  this.handlePaymentUI = function (change) {
+    var showGreetingsTimer;
+    if (change > 0) {
+      cashInput.value = change;
+      okMessage.textContent = 'Here is your change!';
+      okMessage.setAttribute('class', 'here-is-your-change');
+      showGreetingsTimer = setTimeout(function () {
+        okMessage.setAttribute('class', 'hide');
+        clearTimeout(showGreetingsTimer);
+        that.reset(that.clearRegister);
+      }, 4000);
+    } else if (change === 0) {
+      okMessage.textContent = 'Thank you!';
+      okMessage.setAttribute('class', 'here-is-your-change');
+      showGreetingsTimer = setTimeout(function () {
+        okMessage.setAttribute('class', 'hide');
+        clearTimeout(showGreetingsTimer);
+        that.reset(that.clearRegister);
+      }, 3000);
+    } else {
+      warning.setAttribute('class', 'warning');
+    }
+
+  };
+
+  // Helper functions
   this.getFormattedAmount = function (value) {
     var currency = supportedCurrencies[0]; // Default
 
@@ -147,54 +226,6 @@ function Register() {
     return dummyValue.substr(0, 1);
   };
 
-  this.getTotal = function(){
-    var result = 0;
-
-    for(var product of this.products) {
-      if(product.discount)
-        result += product.price * (1-product.discount);
-      else
-        result += product.price;
-    }
-
-    that.renderPurchasedTable();
-    return result;
-  };
-
-  this.reset = function () {
-    this.products = [];
-    countProducts.textContent = '(0)';
-    registerTotal.innerHTML = this.getTotal();
-    cashInput.value = 0;
-  };
-
-  this.pay = function(amount){
-    if(amount >= this.getTotal()){
-      var change = amount - this.getTotal();
-      var showGreetingsTimer;
-      if (change > 0) {
-        okMessage.textContent = 'Here is your change!';
-        okMessage.setAttribute('class', 'here-is-your-change');
-        showGreetingsTimer = setTimeout(function () {
-          okMessage.setAttribute('class', 'hide');
-          clearTimeout(showGreetingsTimer);
-          that.reset();
-        }, 4000);
-        console.log("Here's your change " + change);
-      } else {
-        okMessage.textContent = 'Thank you!';
-        okMessage.setAttribute('class', 'here-is-your-change');
-        showGreetingsTimer = setTimeout(function () {
-          okMessage.setAttribute('class', 'hide');
-          clearTimeout(showGreetingsTimer);
-          that.reset();
-        }, 3000);
-      }
-    } else {
-      warning.setAttribute('class', 'warning');
-      throw new Error("Not enough money!");
-    }
-  };
 }
 
 milkButton.addEventListener("click", function(){
@@ -210,7 +241,7 @@ gumButton.addEventListener("click", function(){
 });
 
 resetButton.addEventListener('click', function () {
-  register.reset();
+  register.reset(register.clearRegister);
 });
 
 var register = new Register();
@@ -219,5 +250,5 @@ var currentCurrency = register.getCurrencySign();
 currecnySign.textContent = currentCurrency + ' ';
 payButton.textContent = ' ' + currentCurrency + ' ';
 payButton.addEventListener("click", function(){
-  register.pay(cashInput.value);
+  register.pay(cashInput.value, register.handlePaymentUI);
 });

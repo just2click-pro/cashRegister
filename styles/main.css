@@ -17,6 +17,10 @@ a, a:hover {
   text-decoration: none;
 }
 
+input, button, .btn:focus {
+	outline: none;
+}
+
 .navbar-header .logo {
 	background: #fff;
 	border-radius: 50%;
@@ -216,11 +220,15 @@ ul {
 }
 
 .warning {
-	text-shadow: 1px 1px 1px #000, 2px 2px 3px tomato;
+	font-family: corbel;
+	font-size: 20px;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5), 2px 2px 3px tomato;
 }
 
 .here-is-your-change {
-	text-shadow: 1px 1px 1px #000, 2px 2px 3px yellowgreen;
+	font-family: corbel;
+	font-size: 20px;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5), 2px 2px 3px yellowgreen;
 }
 
 .clearfix:after {
