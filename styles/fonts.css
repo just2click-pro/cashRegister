@@ -1,0 +1,34 @@
+@font-face {
+    font-family: 'corbel-bold-italic';
+    src: url(/resources/fonts/corbel/Corbel Bold Italic.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: 'corbel-bold';
+    src: url(/resources/fonts/corbel/Corbel Bold.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: 'corbel-italic';
+    src: url(/resources/fonts/corbel/Corbel Italic.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: 'corbel';
+    src: url(/resources/fonts/corbel/Corbel.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: 'monaco';
+    src: url(/resources/fonts/Monaco.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: 'go-2-old-western';
+    src: url(/resources/fonts/go_2_old_western/Go2OldWestern.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: 'dejavu-sans-bold';
+    src: url(/resources/fonts/dejavu-sans/DejaVuSans-Bold.ttf) format("truetype");
+}
