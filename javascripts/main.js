@@ -6,7 +6,7 @@ var registerTotal = document.querySelector("#register-total");
 var cashInput = document.querySelector("#cash-input");
 var payButton = document.querySelector("#pay");
 var resetButton = document.querySelector('#reset');
-var currecnySign = document.querySelector('.currecny-sign');
+var currecnySign = document.querySelectorAll('.currecny-sign');
 var purchasedTable = document.querySelector('#purchased-table');
 var warning = document.querySelector('#warning');
 var okMessage = document.querySelector('#okMessage');
@@ -77,7 +77,7 @@ function Register() {
     that.products = [];
     countProducts.textContent = '(0)';
     registerTotal.innerHTML = this.getTotal();
-    cashInput.value = 0;
+    cashInput.value = '';
 
     if (callback) {
       callback();
@@ -249,7 +249,9 @@ var register = new Register();
 
 // Resets
 var currentCurrency = register.getCurrencySign();
-currecnySign.textContent = currentCurrency + ' ';
+for (var ctrl of currecnySign) {
+  ctrl.textContent = currentCurrency + ' ';
+}
 payButton.textContent = ' ' + currentCurrency + ' ';
 payButton.addEventListener("click", function(){
   register.pay(cashInput.value, register.handlePaymentUI);

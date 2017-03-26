@@ -58,18 +58,19 @@
 		    </div>
 		    <div class="col-sm-4 list-container list-container-middle clearfix">
 		    	<h2>Cash/Payment</h2>
-		    	<div class="total-label">Total: </div>&nbsp;<span class='cash-font currecny-sign'></span><div class="total-sum" id="register-total">0</div>
-		    	<div class="cash-lable">Amount Payed: </div>
 		    	<div class='payment'>
-		    		<span class='cash-font currecny-sign'></span><input type="number" class="cash-font right-text" id="cash-input"/>
+		    		<div class="bold-label">Total:</div>&nbsp;<span class='cash-font currecny-sign'></span><div class="total-sum" id="register-total">0</div>
+		    	</div>
+		    	<div class="bold-label">To Pay:</div>&nbsp;<span class='cash-font currecny-sign'></span><input type="number" class="cash-font right-text cash-input" id="cash-input"/>
+		    	<div class='payment'>
 			    	<div class='cash-button pull-right'>
 			    		<button class='btn btn-primary pull-left left-button' id="pay"></button><span class='product-text'> Pay</span>
 			    	</div>
+			    	<div class='cash-button clear-button pull-left'>
+			    		<button class='btn btn-info pull-right left-button' id="reset"><i class='glyphicon glyphicon-off'></i></button><span class='product-text'> Clear</span>
+			    	</div>
 		    	</div>
 		    	<div class='payment'>
-			    	<div class='cash-button clear-button pull-right'>
-			    		<button class='btn btn-info pull-left left-button' id="reset"><i class='glyphicon glyphicon-off'></i></button><span class='product-text'> Clear</span>
-			    	</div>
 			    	<div class='hide' id='warning'>
 			    		Opps, not enough money!!
 			    	</div>
