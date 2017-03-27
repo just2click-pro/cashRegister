@@ -247,6 +247,12 @@ resetButton.addEventListener('click', function () {
 
 var register = new Register();
 
+document.addEventListener('onkeydown', function (e) {
+  if (e.keyCode === 13) {
+    register.pay(cashInput.value, register.handlePaymentUI);
+  }
+});
+
 // Resets
 var currentCurrency = register.getCurrencySign();
 for (var ctrl of currecnySign) {
