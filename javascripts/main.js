@@ -169,13 +169,18 @@ function Register() {
     }
   };
 
-  this.clearRegister = function () {
+  this.resetMessages = function () {
     okMessage.setAttribute('class', 'hide');
     warning.setAttribute('class', 'hide');
+  };
+
+  this.clearRegister = function () {
+    that.resetMessages();
     that.clearPurchasedTable();
   };
 
   this.handlePaymentUI = function (change) {
+    that.resetMessages();
     var showGreetingsTimer;
     if (change > 0) {
       cashInput.value = change;
